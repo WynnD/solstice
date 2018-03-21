@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <div class="right floated two wide column">
-        <button class="ui button" id="star-button" @click="/*do click*/">
+        <button class="ui button" id="star-button" @click="toggleFavorite(contactId)">
           <i class="star icon" :class="extraClass"></i>
         </button>
       </div>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   computed: {
@@ -33,11 +33,12 @@ export default {
       return this.$route.params.id
     },
     extraClass () {
-      return (this.isFavorite(this.contactId)) ? '' : 'outline'
+      return (this.isFavorite()(this.contactId)) ? '' : 'outline'
     }
   },
   methods: {
-    ...mapGetters(['isFavorite'])
+    ...mapGetters(['isFavorite']),
+    ...mapMutations(['toggleFavorite'])
   }
 }
 </script>

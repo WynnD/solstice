@@ -25,7 +25,7 @@ let mutations = {
     console.log('Added contact with id', contact.id)
   },
   toggleFavorite (state, id) {
-    state.contacts[id].favorite = !state[id].favorite
+    state.contacts[id].favorite = !state.contacts[id].favorite
   }
 }
 

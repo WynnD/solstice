@@ -1,5 +1,5 @@
 <template>
-  <div class="ui segments">
+  <div class="ui segments" v-if="dataReady">
     <router-link v-for="contact in favoritedContacts"
       :key="contact.id"
       :to="{path:'/contact/'+contact.id}">
@@ -39,18 +39,15 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   computed: {
+    dataReady () {
+      return !(Object.keys(this.contacts).length === 0 && this.contacts.constructor === Object)
+    },
     ...mapState(['contacts']),
     ...mapGetters(['favoritedContacts', 'nonFavoritedContacts'])
-  },
-  mounted () {
-    this.getContactList()
-  },
-  methods: {
-    ...mapActions(['getContactList'])
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="ui vertical segments">
+  <div class="ui vertical segments" v-if="dataReady">
     <div id="header" class="ui padded segment aligned center">
       <img class="ui centered medium image" :src="contact.largeImageURL"/>
       <h1 class="ui header">{{contact.name}}
@@ -31,15 +31,17 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   data () {
     return {
-      contact: {}
     }
   },
   computed: {
+    contact () {
+      return this.contactById()(this.id)
+    },
     id () {
       return this.$route.params.id
     },
@@ -64,10 +66,12 @@ export default {
       }
 
       return `${months[m-1]} ${d}, ${y}`
-    }
+    },
+    dataReady () {
+      return !(this.contact === undefined || (Object.keys(this.contact).length === 0 && this.contact.constructor === Object))
+    },
   },
   mounted () {
-    this.contact = this.contactById()(this.id)
   },
   methods: {
     formatPhone(number) {
