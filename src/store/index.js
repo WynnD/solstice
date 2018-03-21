@@ -21,6 +21,7 @@ let getters = {
 let mutations = {
   addContact (state, contact) {
     contact.favorite = false
+    contact.imageLoads = false
     Vue.set(state.contacts, contact.id, contact)
     console.log('Added contact with id', contact.id)
   },
