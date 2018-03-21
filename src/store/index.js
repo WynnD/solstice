@@ -8,9 +8,14 @@ let state = {
 }
 
 let getters = {
-  isFavorite (state, id) {
+  isFavorite: (state) => (id) => {
     return (state.contacts[id] !== undefined) && state.contacts[id].favorite
-  }
+  },
+  contactById: (state) => (id) => {
+    return state.contacts[id]
+  },
+  favoritedContacts: (state) => Object.values(state.contacts).filter(contact => contact.favorite),
+  nonFavoritedContacts: (state) => Object.values(state.contacts).filter(contact => !contact.favorite)
 }
 
 let mutations = {

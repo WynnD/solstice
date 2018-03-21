@@ -1,14 +1,20 @@
 <template>
-  <div class="ui segment">
-    <div v-if="singleContact">
-      <router-link id="back-button" :to="{path: '/'}">
-        <i class="angle left icon"></i>Contacts
-      </router-link>
-      <button class="ui button" id="star-button" @click="/*do click*/">
-        <i class="star icon" :class="extraClass"></i>
-      </button>
+  <div>
+
+    <div class="ui segment grid" v-if="singleContact">
+      <div class="left floated six wide column">
+        <router-link id="back-button" :to="{path: '/'}">
+          <i class="angle left icon"></i>Contacts
+        </router-link>
+      </div>
+      <div class="right floated two wide column">
+        <button class="ui button" id="star-button" @click="/*do click*/">
+          <i class="star icon" :class="extraClass"></i>
+        </button>
+      </div>
     </div>
-    <div v-else class="ui header">
+
+    <div v-else class="ui segment header">
       Contacts
     </div>
   </div>
@@ -21,7 +27,7 @@ export default {
   computed: {
     singleContact () {
       const params = this.$route.params
-      return true || !(Object.keys(params).length === 0 && params.constructor === Object)
+      return !(Object.keys(params).length === 0 && params.constructor === Object)
     },
     contactId () {
       return this.$route.params.id
@@ -41,11 +47,13 @@ export default {
     /* button color */
     color: #99F;
     float: left;
-    font-size: 1.6em;
   }
 
   #star-button {
-    color: #DD0;
     float: right;
+  }
+
+  #star-button {
+    background: none;
   }
 </style>
