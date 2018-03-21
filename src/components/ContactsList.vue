@@ -1,73 +1,71 @@
 <template>
-  <div id="contact-list" class="ui segments" v-if="dataReady">
-    <div class="ui segment">
-      <div class="sub header">Favorited</div>
+  <div id="contact-list" v-if="dataReady">
+
+    <div v-if="favoritedContacts.length > 0" class="ui compact top attached segment category">
+      <h1 class="ui sub header aligned left">Favorite Contacts</h1>
     </div>
-    <router-link v-for="contact in favoritedContacts"
+    <contacts-list-item v-for="contact in sortedFavoritedContacts"
       :key="contact.id"
-      :to="{path:'/contact/'+contact.id}">
-      <div class="ui padded segment grid">
-        <div class="ui six wide column">
-          <img class="ui small image" :src="contact.smallImageURL" @error="setDefaultImage(contact.id)"/>
-        </div>
-        <div class="ui one wide column">
-          <i v-if="contact.favorite" class="star icon"></i>
-        </div>
-        <div class="ui nine wide column">
-          <h2 class="ui header aligned left">{{contact.name}}
-            <div class="sub header">{{contact.companyName}}</div>
-          </h2>
-        </div>
-      </div>
-    </router-link>
+      :contact="contact"/>
 
-
-
-    <router-link v-for="contact in nonFavoritedContacts"
+    <div class="ui attached segment compact category">
+      <h1 class="ui sub header aligned left">Other Contacts</h1>
+    </div>
+    <contacts-list-item v-for="contact in sortedNonFavoritedContacts"
       :key="contact.id"
-      :to="{path:'/contact/'+contact.id}">
-      <div class="ui padded segment grid">
-        <div class="ui six wide column">
-          <img class="ui small image" :src="contact.smallImageURL" @error="setDefaultImage(contact.id)"/>
-        </div>
-        <div class="ui one wide column">
-          <i v-if="contact.favorite" class="star icon"></i>
-        </div>
-        <div class="ui nine wide column">
-          <h2 class="ui header aligned left">{{contact.name}}
-            <div class="sub header">{{contact.companyName}}</div>
-          </h2>
-        </div>
-      </div>
-    </router-link>
+      :contact="contact"/>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import ContactsListItem from '@/components/ContactsListItem'
 
 export default {
+  components: {
+    'contacts-list-item': ContactsListItem
+  },
   computed: {
     dataReady () {
       return !(Object.keys(this.contacts).length === 0 && this.contacts.constructor === Object)
+    },
+    sortedFavoritedContacts () {
+      let favorites = this.$store.getters.favoritedContacts
+      return this.sortContactsByName(favorites)
+    },
+    sortedNonFavoritedContacts () {
+      let non_favorites = this.$store.getters.nonFavoritedContacts
+      return this.sortContactsByName(non_favorites)
     },
     ...mapState(['contacts']),
     ...mapGetters(['favoritedContacts', 'nonFavoritedContacts'])
   },
   methods: {
-    setDefaultImage (id) {
-      console.log("Detected error")
-      this.contacts[id].smallImageURL = 'static/UserSmall/UserIconSmall@3x.png'
-    },
+    sortContactsByName (contacts) {
+      contacts = Object.values(contacts)
+      contacts.sort((a, b) => {
+        let nameA = a.name.toUpperCase()
+        let nameB = b.name.toUpperCase()
+        if (nameA < nameB) {
+          return -1
+        } else if (nameA > nameB) {
+          return 1
+        } else {
+          return 0
+        }
+      })
+      return contacts
+    }
   }
 }
 </script>
 
 <style scoped>
-/*
-  img {
-    max-width: 120px;
-    max-height: 120px;
-  }
-*/
+.category.segment {
+  background-color: #DDD;
+}
+
+.category.segment .sub.header {
+  color: #444;
+}
 </style>

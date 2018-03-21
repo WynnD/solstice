@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="ui segment grid" v-if="singleContact">
+    <div class="ui basic segment grid" v-if="singleContact">
       <div class="eight wide middle aligned column">
         <router-link id="back-button" :to="{path: '/'}" class="ui header" v-on:click.native="fadeToList">
           <i class="angle left icon"></i>Contacts
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div v-else class="ui segment header">
+    <div v-else class="ui basic segment header">
       Contacts
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
     imageUrl () {
       const urls = [
         'static/FavoriteStarFalse/FavoriteFalse@3x.png',
-        '/static/FavoriteStarTrue/FavoriteTrue@3x.png'
+        'static/FavoriteStarTrue/FavoriteTrue@3x.png'
       ]
       return (this.favorited)?urls[1]:urls[0]
     },

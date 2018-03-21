@@ -1,12 +1,12 @@
 <template>
   <div id="contact-page" class="ui vertical segments" v-if="dataReady">
-    <div id="header" class="ui padded segment aligned center">
+    <div id="header" class="ui padded top attached segment aligned center">
       <img class="ui centered medium image" :src="contact.largeImageURL" @error="setDefaultImage"/>
       <h1 class="ui header">{{contact.name}}
         <div class="ui sub header">{{contact.companyName}}</div>
       </h1>
     </div>
-    <div class="ui padded segment grid phone" v-for="(number,type) in contact.phone"
+    <div class="ui padded attached segment grid phone" v-for="(number,type) in contact.phone"
       :key=type>
         <div class="ui ten wide column left floated">
           <div class="ui sub header aligned left">Phone:</div>
@@ -19,21 +19,21 @@
         </div>
     </div>
 
-    <div id="address" class="ui padded segment grid">
+    <div id="address" class="ui padded attached segment grid">
       <div class="ui sixteen wide column">
         <div class="ui sub header aligned left">Address:</div>
         <div class="ui header aligned left" v-html="address"></div>
       </div>
     </div>
 
-    <div id="birthdate" class="ui padded segment grid">
+    <div id="birthdate" class="ui padded attached segment grid">
       <div class="ui sixteen wide column">
         <div class="ui sub header aligned left">Birthdate:</div>
         <div class="ui header aligned left">{{birthDate}}</div>
       </div>
     </div>
 
-    <div id="email" class="ui padded segment grid">
+    <div id="email" class="ui padded attached segment grid">
       <div class="ui sixteen wide column">
         <div class="ui sub header aligned left">Email:</div>
         <div class="ui header aligned left"><p style="display: block; width: 100%; text-overflow: ellipsis"> {{contact.emailAddress}}</p></div>
