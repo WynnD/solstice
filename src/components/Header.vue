@@ -3,7 +3,7 @@
     <div id="masthead" class="ui basic segment grid" v-if="singleContact">
       <div class="row">
         <div class="eight wide column bottom aligned">
-          <router-link id="back-button" :to="{path: '/'}" class="ui header" v-on:click.native="fadeToList">
+          <router-link id="back-button" :to="{path: '/'}" class="ui header">
             <i class="fitted angle left icon"></i>Contacts
           </router-link>
         </div>

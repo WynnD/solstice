@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     setDefaultImage () {
-      console.warn(`Detected error when retrieving profile image for ${this.contact.name}, replacing with default`)
+      console.log(`Detected error when retrieving profile image for ${this.contact.name}, replacing with default`)
       this.contact.smallImageURL = 'static/UserSmall/UserIconSmall@3x.png'
     }
   }
