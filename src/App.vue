@@ -17,13 +17,28 @@ export default {
 </script>
 
 <style>
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
+}
+
+html, body {
+  background-color: #F8F8F8;
+}
+
+@media only screen and (max-width:760px) {
+  #app {
+    margin: 0 !important;
+  }
+}
+
+.segment .header {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .star.icon {

@@ -1,14 +1,17 @@
 <template>
   <router-link :to="{path:'/contact/'+contact.id}">
-      <div class="ui padded attached segment doubling grid">
-        <div class="ui five wide column">
-          <img class="ui small image" :src="contact.smallImageURL" @error="setDefaultImage(contact.id)"/>
-        </div>
-        <div class="ui eleven wide column description">
-          <img v-if="contact.favorite" class="ui image" src="static/FavoriteStarTrue/FavoriteTrue@3x.png"/>
-          <h3 class="ui header aligned left">{{contact.name}}
-            <div class="sub header">{{contact.companyName}}</div>
-          </h3>
+      <div class="ui attached vertical segment grid clearing middle aligned">
+        <div class="ui row">
+          <div class="ui four wide column">
+            <img class="ui tiny image" :src="contact.smallImageURL" @error="setDefaultImage()"/>
+          </div>
+          <div class="ui twelve wide column description">
+            <h2 :style="descriptionStyleData" class="ui header aligned left">
+              <span style="font-size: 0.75em" v-if="contact.favorite">⭐</span>
+              {{contact.name}}
+              <div :style="companyNameStyleData" class="sub header">{{contact.companyName}}</div>
+            </h2>
+          </div>
         </div>
       </div>
   </router-link>
@@ -22,18 +25,30 @@ export default {
       required: true
     }
   },
+  computed: {
+    companyNameStyleData () {
+      return (this.contact.favorite) ? {paddingLeft: '2em'} : {}
+    },
+    descriptionStyleData () {
+      return (this.contact.favorite) ? {} : {paddingLeft: '1.25em'}
+    }
+  },
   methods: {
-    setDefaultImage (id) {
-      console.log("Detected error")
-      this.contacts[id].smallImageURL = 'static/UserSmall/UserIconSmall@3x.png'
+    setDefaultImage () {
+      console.warn(`Detected error when retrieving profile image for ${this.contact.name}, replacing with default`)
+      this.contact.smallImageURL = 'static/UserSmall/UserIconSmall@3x.png'
     }
   }
 }
 </script>
 
 <style scoped>
-.description .ui.image {
+.favorite.icon {
   width: 30px;
   height: 30px;
+}
+
+.description .ui.header {
+  font-weight: normal;
 }
 </style>

@@ -1,19 +1,25 @@
 <template>
-  <div id="contact-list" v-if="dataReady">
+  <div>
+    <div id="contact-list" v-if="dataReady">
 
-    <div v-if="favoritedContacts.length > 0" class="ui compact top attached segment category">
-      <h1 class="ui sub header aligned left">Favorite Contacts</h1>
-    </div>
-    <contacts-list-item v-for="contact in sortedFavoritedContacts"
-      :key="contact.id"
-      :contact="contact"/>
+      <div v-if="favoritedContacts.length > 0" class="ui compact top attached segment category">
+        <h1 class="ui sub header aligned left">Favorite Contacts</h1>
+      </div>
+      <contacts-list-item v-for="contact in sortedFavoritedContacts"
+        :key="contact.id"
+        :contact="contact"/>
 
-    <div class="ui attached segment compact category">
-      <h1 class="ui sub header aligned left">Other Contacts</h1>
+      <div class="ui attached segment compact category">
+        <h1 class="ui sub header aligned left">Other Contacts</h1>
+      </div>
+      <contacts-list-item v-for="contact in sortedNonFavoritedContacts"
+        :key="contact.id"
+        :contact="contact"/>
     </div>
-    <contacts-list-item v-for="contact in sortedNonFavoritedContacts"
-      :key="contact.id"
-      :contact="contact"/>
+
+    <div v-else class="ui active dimmer">
+      <div class="ui loader"></div>
+    </div>
   </div>
 </template>
 
@@ -34,8 +40,8 @@ export default {
       return this.sortContactsByName(favorites)
     },
     sortedNonFavoritedContacts () {
-      let non_favorites = this.$store.getters.nonFavoritedContacts
-      return this.sortContactsByName(non_favorites)
+      let nonFavorites = this.$store.getters.nonFavoritedContacts
+      return this.sortContactsByName(nonFavorites)
     },
     ...mapState(['contacts']),
     ...mapGetters(['favoritedContacts', 'nonFavoritedContacts'])
@@ -61,11 +67,21 @@ export default {
 </script>
 
 <style scoped>
+#contact-list {
+  margin-top: 0;
+  background-color: white;
+}
+
 .category.segment {
   background-color: #DDD;
 }
 
 .category.segment .sub.header {
   color: #444;
+}
+
+.category {
+  padding-top: 3px;
+  padding-bottom: 0;
 }
 </style>

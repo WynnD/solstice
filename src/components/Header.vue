@@ -1,14 +1,15 @@
 <template>
   <div>
-
-    <div class="ui basic segment grid" v-if="singleContact">
-      <div class="eight wide middle aligned column">
-        <router-link id="back-button" :to="{path: '/'}" class="ui header" v-on:click.native="fadeToList">
-          <i class="angle left icon"></i>Contacts
-        </router-link>
-      </div>
-      <div class="eight wide column middle aligned">
-        <img class="ui right floated mini image" :src="imageUrl" @click="toggleFavorite(contactId)"/>
+    <div id="masthead" class="ui basic segment grid" v-if="singleContact">
+      <div class="row">
+        <div class="eight wide column bottom aligned">
+          <router-link id="back-button" :to="{path: '/'}" class="ui header" v-on:click.native="fadeToList">
+            <i class="fitted angle left icon"></i>Contacts
+          </router-link>
+        </div>
+        <div class="eight wide column middle aligned">
+          <img id="star-button" class="right floated" :src="imageUrl" @click="toggleFavorite(contactId)"/>
+        </div>
       </div>
     </div>
 
@@ -28,7 +29,7 @@ export default {
         'static/FavoriteStarFalse/FavoriteFalse@3x.png',
         'static/FavoriteStarTrue/FavoriteTrue@3x.png'
       ]
-      return (this.favorited)?urls[1]:urls[0]
+      return (this.favorited) ? urls[1] : urls[0]
     },
     singleContact () {
       const params = this.$route.params
@@ -42,12 +43,6 @@ export default {
     }
   },
   methods: {
-    fadeToList () {
-      $('#contact-page').transition('fade right')
-    },
-    fadeToInfo() {
-      $('#contact-list').transition('fade left')
-    },
     ...mapGetters(['isFavorite']),
     ...mapMutations(['toggleFavorite'])
   }
@@ -57,19 +52,23 @@ export default {
 <style>
   #back-button {
     /* button color */
-    color: #99F;
+    color: #00afd6;
+    font-weight: normal;
     float: left;
   }
 
   #star-button {
     float: right;
+    width: 20px;
+    height: 20px;
   }
 
   #star-button {
     background: none;
   }
 
-/*
-\static\FavoriteStarTrue\FavoriteTrue@3x.png
-*/
+  #masthead {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 </style>
